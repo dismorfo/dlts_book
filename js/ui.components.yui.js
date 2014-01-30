@@ -30,6 +30,7 @@ Y.use(
    , pjax = new Y.Pjax({ container: '.pane.display' })
 
      /** callbacks */
+   , resizePageMeta
    , slide_value_change
    , pager_form
    , on_button_click
@@ -53,6 +54,22 @@ Y.use(
     /** add view port information to global setting */
     book.viewport = Y.DOM.viewportRegion();
 
+    resizePageMeta = function () {
+
+        var viewportHeight = this.get('winHeight');
+        var adminBarHeight = 0;
+        if (Y.one('#admin-menu')) {
+            adminBarHeight = Y.one('#toolbar').get('offsetHeight') + Y.one('#admin-menu').get('offsetHeight') + Y.one('.tabs').get('offsetHeight') + 10;
+        }
+        var topHeight = Y.one('#top').get('offsetHeight');
+        var navbarHeight = Y.one('#navbar').get('offsetHeight');
+        var pageHeight = Y.one('#pager').get('offsetHeight');
+        var sidebarHeight = viewportHeight - (adminBarHeight + topHeight + navbarHeight + pageHeight);
+        Y.one('#pagemeta').setStyle('height', sidebarHeight + 'px');
+        Y.one('#pagemeta').setStyle('overflow-y', 'scroll');
+        Y.log(sidebarHeight);
+    }
+  
     on_button_click = function(e) {
 
         e.preventDefault();
@@ -323,7 +340,9 @@ Y.use(
     slider.render('#slider');
     
     /** events listeners */
-   
+    Y.on('contentready', resizePageMeta, '#pagemeta');
+    Y.on('windowresize', resizePageMeta, '#pagemeta');
+
     slider.after('valueChange', slide_value_change, { datasource: slider_datasource, slider: slider });
 
     slider.after('slideEnd', slide_end, slider);
