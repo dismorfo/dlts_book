@@ -26,6 +26,17 @@ body.pagemeta-hidden .pane.load {
   }
 }
 
+.olLayerDiv {
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+body.openlayers-loading {
+  .olLayerDiv {
+    opacity: 0;
+  }
+}
+
 // Animation originally generated at http://cssload.net/en/
 // Sassified by DLTS 
 // Relies on libraries/compass-animate/_animations & libraries/compass-animate/_keyframes from https://github.com/ZeeAgency/compass-animation
