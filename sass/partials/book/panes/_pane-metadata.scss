@@ -42,10 +42,13 @@
         .field .field-label {
             font-weight: bold;
         }
-        .lang-options {
+        .metapane-dropdowns{       
             border-bottom: 1px solid #ccc;
-            padding-bottom: .5em;
+            padding-bottom: 1em;
             margin-bottom: .5em;
+        }
+        .lang-options {
+             margin-bottom: 0;
         }
         .field-name-field-representative-image {
             img {
