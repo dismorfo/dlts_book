@@ -384,7 +384,7 @@ Y.use(
 
     /** events listeners */
 
-    Y.on('domready', showHideTitleBar, '#pagemeta');
+    Y.on('domready', showHideTitleBar);
     
     Y.on('contentready', resizePageMeta, '#pagemeta');
 
