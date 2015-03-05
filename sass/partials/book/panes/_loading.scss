@@ -27,6 +27,15 @@ body.pagemeta-hidden .pane.load {
   }
 }
 
+.pane.load.loading {
+  opacity: 0;
+}
+
+body.openlayers-loading .pane.load.loading {
+  opacity: 1;
+  transition: opacity .5s;
+}
+
 .olLayerDiv {
   opacity: 1;
   transition: opacity .5s;
