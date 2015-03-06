@@ -69,7 +69,7 @@ function dlts_book_js_alter(&$javascript) {
 
       $site_path . 'modules/views/js/views-contextual.js' => FALSE,
       $site_path . 'modules/field_group/field_group.js' => FALSE,
-
+      $site_path . 'modules/ctools/js/jump-menu.js' => FALSE
     );
   }
 
