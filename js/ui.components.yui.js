@@ -125,7 +125,7 @@ Y.use(
     };
 
     on_button_click = function(e) {
-
+     
       e.preventDefault();
 
       var self = this,
@@ -182,7 +182,7 @@ Y.use(
     /** TODO: I don't like this, find a more elegant solution */
     pager_form = function(e) {
       e.preventDefault();
-
+      
       var value = this.get('value'),
         current = parseInt(book.sequence_number, 10),
         path = book.path + '/',
@@ -291,7 +291,7 @@ Y.use(
     };
 
     pjax_navigate = function(e) {
-
+    
       var msg = e.url.replace(book.path + '/', '');
 
       if (/(^[\d]+$){1}/.test(msg)) {
@@ -418,12 +418,13 @@ Y.use(
 
     // remove content
     function onThumbnailsPageComplete(id, response, args) {
-      Y.one('.thumbnails-container').empty();
+        Y.one('.thumbnails-container').empty();
     }
 
     // add loading effect
     function onThumbnailsPageStart(e) {
-      Y.one('.thumbnails-container').addClass('io-loading');
+        Y.one('.thumbnails-container').addClass('io-loading');
+        Y.all('.page-number').hide();
     }
 
     // remove loading effect        
@@ -433,10 +434,11 @@ Y.use(
 
     function onThumbnailsPageSuccess(id, response, args) {
       Y.one('.thumbnails-container').set('innerHTML', response.response);
+        Y.all('.page-number').show();
     }
 
     function onThumbnailsPageFailure(e) {
-      Y.log('failure');
+     // Y.log('failure');
     }
 
     Y.one('body').delegate('click', function(e) {
@@ -444,7 +446,8 @@ Y.use(
       var url;
 
       e.preventDefault();
-
+      Y.all('.thumbHolder').empty();
+      Y.all('.page-number').hide();
       /** test if the target is not active */
       if (e.currentTarget.hasClass('inactive')) return false;
 
@@ -550,7 +553,10 @@ Y.use(
     }, Y.one('#multivolbooks'));
 
     Y.on('button:button-thumbnails:on', function(e) {
-
+      
+      var node = Y.one('.pane.thumbnails');
+    
+      
       var current_book_page = Y.one('#slider_value').get('value'),
         pane = Y.one('.view-book-thumbnails'),
         pager_count = 10
@@ -563,18 +569,31 @@ Y.use(
 
       this.removeClass('hidden');
 
-      if (!pane || pane && (current_book_page / pager_count) > 1) {
+      // if (!pane || pane && (current_book_page / pager_count) > 1) {
 
         // Y.io.queue(url);
 
         Y.io(target, {
           on: {
+            start: onThumbnailsOnStart,
             complete: onThumbnailsOnSuccess
           }
         });
-      }
+      //}
 
     }, Y.one('.pane.thumbnails'));
+
+    // Subscribe to "io.start" for thumbnails page requests.
+
+    function onThumbnailsOnStart(id) {
+      var node, current_book_page, block;
+     // console.log("thumb start thumbnail activator just clicked");
+      /** current book page */
+      node = Y.one('.pane.thumbnails');
+      if (node) {
+         node.removeClass('hidden');
+      }
+    }
 
     // Subscribe to "io.success" for thumbnails page requests.
 
@@ -588,7 +607,7 @@ Y.use(
       current_book_page = Y.one('#slider_value').get('value');
 
       node.one('.thumbnails-container').set('innerHTML', response.response);
-
+      
       block = node.one('.sequence-number-' + current_book_page);
 
       if (node) {
