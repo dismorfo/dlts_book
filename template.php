@@ -370,19 +370,13 @@ function dlts_book_preprocess_node(&$vars) {
 
       case 'metadata':
 
-        // dpm($node);
-
         $multivol_book = dlts_utilities_book_get_multivol_book($node);
 
         $langcode = field_language('node', $node, 'field_title');
 
         if ($multivol_book) {
-
           $vars['select_multivolbook'] = views_embed_view('set_of_multi_volume_by_identifier','block_1', dlts_utilities_multivol_book_get_multivol_nid($multivol_book) );
-
         }
-
-        // $vars['rights'] = (function_exists('dlts_utilities_book_get_rights')) ? dlts_utilities_book_get_rights($node) : '' ;
 
         $languages = language_list('enabled');
 
@@ -462,8 +456,6 @@ function dlts_book_preprocess_node(&$vars) {
 
     case 'dlts_book_page' :
     case 'dlts_book_stitched_page' :
-
-      // print $vars['node']->title;
 
       /** Use node--dlts-book-page.tpl.php for both dlts_book_page and dlts_book_stitched_page content types */
       $vars['theme_hook_suggestions'][] = ($isPJAX) ? 'node__dlts_book_pjax_page' : 'node__dlts_book_page';
