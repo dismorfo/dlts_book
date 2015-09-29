@@ -936,6 +936,12 @@ function dlts_book_process_views_view(&$vars) {
 
 function dlts_book_field__field_title($variables) {
 
+  /** Include utilities files */
+  module_load_include('inc', 'dlts_utilities', 'inc/dlts_utilities.book');
+  
+  /** Include utilities files */
+  module_load_include('inc', 'dlts_utilities', 'inc/dlts_utilities.book_page');  
+
   $output = '';
 
   $multivol_book = dlts_utilities_book_get_multivol_book($variables['element']['#object']);
